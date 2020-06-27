@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "emmet.includeLanguages": {
+    "aspnetcorerazor": "html"
+  },
+  "omnisharp.useEditorFormattingSettings": true
+}
