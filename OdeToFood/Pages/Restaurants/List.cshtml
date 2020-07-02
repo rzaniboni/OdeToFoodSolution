@@ -5,10 +5,10 @@
 
 <h1>Restaurants</h1>
 
-<form action="/" method="get">
+<form method="get">
   <div class="form-group">
     <div class="input-group">
-      <input type="search" class="form-control" value="" />
+      <input type="search" class="form-control" asp-for="SearchTerm" />
       <span class="input-group-btn">
           <button class="btn btn-default">
              <!-- <i class="material-icons md-18">search</i> -->
@@ -17,7 +17,6 @@
       </span>
     </div>
   </div>
-
 </form>
 
 <table class="table">
@@ -27,6 +26,11 @@
       <td>@restaurant.Name</td>
       <td>@restaurant.Location</td>
       <td>@restaurant.Cuisine</td>
+      <td>
+        <a class="btn btn-lg" asp-page="./Detail" asp-route-restaurantId="@restaurant.Id" >
+            x
+        </a>
+      </td>
     </tr>
   }
 
