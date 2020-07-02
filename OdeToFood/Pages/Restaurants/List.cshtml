@@ -28,7 +28,10 @@
       <td>@restaurant.Cuisine</td>
       <td>
         <a class="btn btn-lg" asp-page="./Detail" asp-route-restaurantId="@restaurant.Id" >
-            x
+              <i class="fas fa-search"></i>
+        </a>
+        <a class="btn btn-lg" asp-page="./Edit" asp-route-restaurantId="@restaurant.Id" >
+              <i class="fas fa-edit"></i>
         </a>
       </td>
     </tr>
@@ -38,7 +41,7 @@
 
 </table>
 
-
+<a asp-page=".\Edit" class="btn btn-primary">Add New Restaurant</a>
 <h2>
 @Model.Message
 </h2>
