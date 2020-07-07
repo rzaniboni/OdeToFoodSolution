@@ -1,13 +1,17 @@
 using System;
+using System.Threading.Tasks;
+using HealthChecks.UI.Core;
+using HealthChecks.UI.SQLite.Storage;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using OdeToFood.Data;
-
 namespace OdeToFood {
   public class Startup {
     public Startup (IConfiguration configuration) {
@@ -19,14 +23,20 @@ namespace OdeToFood {
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices (IServiceCollection services) {
 
+      var connectionString = Configuration.GetConnectionString ("OdeToFoodDb");
+
       services.AddDbContextPool<OdeToFoodDbContext> (options => {
-        options.UseSqlite (Configuration.GetConnectionString ("OdeToFoodDb"));
+        options.UseSqlite (connectionString);
       });
 
       services.AddScoped<IRestaurantData, SqlRestaurantData> ();
 
       services.AddRazorPages ();
       services.AddControllers ();
+
+      services.AddHealthChecks ().AddSqlite (connectionString)
+        .AddCheck ("Test Health Check", () => HealthCheckResult.Healthy ("Server is healty"));
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +62,7 @@ namespace OdeToFood {
       app.UseEndpoints (endpoints => {
         endpoints.MapRazorPages ();
         endpoints.MapControllers ();
+        endpoints.MapHealthChecks ("/health");
       });
 
     }

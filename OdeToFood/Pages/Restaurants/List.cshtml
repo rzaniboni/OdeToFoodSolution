@@ -2,9 +2,21 @@
 @model OdeToFood.Pages.Restaurants.ListModel
 @{
     ViewData["Title"] = "Restaurants";
+
+    var sum = 1 + 2;
+    var menu = new string[] { "Pizza", "caffé", "cake"};
 }
 
 <h1>Restaurants</h1>
+
+<div>
+  <h3>The sum is @sum</h3>
+  <h3>Menu</h3>
+  @foreach (var item in menu)
+  {
+    <li>@item</li>
+  }
+</div>
 
 <form method="get">
   <div class="form-group">
